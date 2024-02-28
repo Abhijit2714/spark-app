@@ -15,7 +15,6 @@ WORKDIR /app
 # Copy the Scala source file into the container
 COPY app/sample.scala .
 
-RUN chmod +x app/sample.scala
 # Compile the Scala source file to generate the class files
 RUN scalac -classpath "$(find /usr/local/spark -name '*jar' | tr '\n' ':')" sample.scala
 
