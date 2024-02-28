@@ -1,11 +1,9 @@
-// PiSpark.scala
 import org.apache.spark.sql.SparkSession
 
 object PiSpark {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
       .appName("Pi Calculation")
-      .master("local[*]")
       .getOrCreate()
 
     val numSamples = 1000000 // You can adjust this for more accuracy
