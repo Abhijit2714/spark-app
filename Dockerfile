@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-CMD ["java", "-cp", "spark-app.jar"]
+
 
 
 
