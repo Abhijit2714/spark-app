@@ -1,5 +1,9 @@
 # Dockerfile
-FROM openjdk:8-jre
+FROM openjdk:8-jdk
+
+# Install Scala
+RUN apt-get update && \
+    apt-get install -y scala
 
 WORKDIR /app
 
