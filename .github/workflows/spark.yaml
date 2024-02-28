@@ -1,55 +1,43 @@
-name: Spark CI/CD
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+
+name: "Build and Test (3.3.0)"
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - 'master'
+    paths:
+      - '3.3.0/**'
+      - '.github/workflows/build_3.3.0.yaml'
+      - '.github/workflows/main.yml'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Java JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: 8
-
-      - name: Build Spark application
-        run: sbt package
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: abhijitdhamne/spark-pi:latest
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Install kubectl
-        uses: azure/k8s-set-context@v1
-        with:
-          install-kubectl: true
-
-      - name: Configure kubectl
-        uses: azure/k8s-set-context@v1
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
-
-      - name: Deploy application using ArgoCD
-        run: |
-          kubectl apply -f argocd-application.yaml
+  run-build:
+    strategy:
+      matrix:
+        image-type: ["all", "python", "scala", "r"]
+    name: Run
+    secrets: inherit
+    uses: ./.github/workflows/main.yml
+    with:
+      spark: 3.3.0
+      scala: 2.12
+      java: 11
+      image-type: ${{ matrix.image-type }}
