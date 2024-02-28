@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-slim
+FROM apache/spark:latest
 
 WORKDIR /app
 
