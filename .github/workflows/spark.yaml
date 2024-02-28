@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Copy code from custom folders
+        run: |
+          find . -maxdepth 2 -type d -name "source_code_folder*" -exec cp -r {}/* . \; 
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
