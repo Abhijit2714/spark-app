@@ -18,5 +18,7 @@ COPY app/sample.scala .
 # Compile the Scala source file to generate the class files
 RUN scalac -classpath "$(find /usr/local/spark -name '*jar' | tr '\n' ':')" sample.scala
 
+RUN chmod +x app/sample.scala
+
 # Command to run the Scala application
 CMD ["/app/sample.scala"]
