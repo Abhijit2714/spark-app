@@ -4,3 +4,6 @@ RUN wget http://mirrors.advancedhosters.com/apache/spark/spark-3.0.0-preview2/sp
 RUN tar -xzf spark-3.0.0-preview2-bin-hadoop2.7.tgz && mv spark-3.0.0-preview2-bin-hadoop2.7 /spark && rm spark-3.0.0-preview2-bin-hadoop2.7.tgz
 COPY start-master.sh /start-master.sh
 COPY start-worker.sh /start-worker.sh
+RUN chmod +x start-master.sh
+RUN chmod +x start-worker.sh
+
