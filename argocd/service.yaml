@@ -9,5 +9,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-      nodePort: 32000# Assuming your Spark application runs on port 8080
+      nodePort: 32000 # Assuming your Spark application runs on port 8080
   type: NodePOrt # Change to NodePort or ClusterIP depending on your requirements
