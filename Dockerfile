@@ -1,13 +1,18 @@
 # Dockerfile
 FROM openjdk:8-jre
 
+# Install Spark (assuming it's not already installed)
+RUN curl -O https://archive.apache.org/dist/spark/spark-3.2.0/spark-3.2.0-bin-hadoop3.2.tgz && \
+    tar -xvf spark-3.2.0-bin-hadoop3.2.tgz && \
+    mv spark-3.2.0-bin-hadoop3.2 /usr/local/spark
+
 WORKDIR /app
 
 # Copy the Scala source file into the container
 COPY app/sample.scala .
 
 # Compile the Scala source file to generate the class files
-RUN scalac -classpath "$(find /usr/local/spark -name '*jar' | tr '\n' ':')" PiSpark.scala
+RUN scalac -classpath "$(find /usr/local/spark -name '*jar' | tr '\n' ':')" sample.scala
 
 # Command to run the Scala application
-CMD ["spark-submit", "--class", "PiSpark", "--master", "local[*]", "/app/PiSpark.scala"]
+CMD ["spark-submit", "--class", "sample", "--master", "local[*]", "/app/sample.scala"]
