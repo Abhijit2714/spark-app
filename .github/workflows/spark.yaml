@@ -13,18 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Copy code from custom folders
-        run: |
-          find . -maxdepth 2 -type d -name "source_code_folder*" -exec cp -r {}/* . \; 
+      - name: Set up Java JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+
+      - name: Build Spark application
+        run: sbt package
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      - name: Build Spark application
-        run: sbt package
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
@@ -34,3 +35,21 @@ jobs:
           push: true
           tags: abhijitdhamne/spark-pi:latest
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install kubectl
+        uses: azure/k8s-set-context@v1
+        with:
+          install-kubectl: true
+
+      - name: Configure kubectl
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+
+      - name: Deploy application using ArgoCD
+        run: |
+          kubectl apply -f argocd-application.yaml
