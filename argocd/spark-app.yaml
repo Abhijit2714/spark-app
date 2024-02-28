@@ -8,7 +8,7 @@ spec:
     namespace: default
   project: default
   source:
-    repoURL: https://github.com/yourusername/your-repo.git
+    repoURL: https://github.com/Abhijit2714/spark-app.git
     path: path/to/spark-pi
     targetRevision: HEAD
   syncPolicy:
