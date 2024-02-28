@@ -19,4 +19,4 @@ COPY app/sample.scala .
 RUN scalac -classpath "$(find /usr/local/spark -name '*jar' | tr '\n' ':')" sample.scala
 
 # Command to run the Scala application
-CMD ["spark-submit", "--class", "sample", "--master", "local[*]", "/app/sample.scala"]
+CMD ["/app/sample.scala"]
