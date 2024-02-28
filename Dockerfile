@@ -11,8 +11,10 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Copy project files (build.sbt, src)
-COPY . .
+# Copy only build.sbt to leverage Docker cache for dependencies
+COPY app/build.sbt ./
+# Copy the entire app directory (including Scala source files)
+COPY app/ ./
 
 # Build Scala project and generate assembly JAR
 RUN sbt clean assembly
@@ -21,4 +23,3 @@ RUN sbt clean assembly
 COPY target/scala-2.12/spark-pi-assembly.jar .
 
 CMD ["java", "-cp", "spark-pi-assembly.jar", "PiSpark"]
-
