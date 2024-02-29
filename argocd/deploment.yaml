@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spark-pi
+  name: spark-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: spark-pi
+      app: spark-app
   template:
     metadata:
       labels:
-        app: spark-pi
+        app: spark-app
     spec:
       containers:
-      - name: spark-pi
+      - name: spark-app
         image: tushardighe/spark-pi:latest
         #command: ["/bin/sh", "-c"]
         #args: ["echo", "This is Spark Application for production environment"]
