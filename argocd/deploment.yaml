@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: spark-pi-container
-          image: apache/spark:3.5.1-scala2.12-java17-python3-r-ubuntu
+          image: abhijitdhamne/spark-pi:latest
           ports:
             - containerPort: 8080 # Assuming your Spark application runs on port 8080
