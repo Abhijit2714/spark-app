@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spark-pi-deployment
+  name: spark-pi
 spec:
   replicas: 1
   selector:
@@ -13,7 +13,9 @@ spec:
         app: spark-pi
     spec:
       containers:
-        - name: spark-pi-container
-          image: abhijitdhamne/spark-pi:latest
-          ports:
-            - containerPort: 8080 # Assuming your Spark application runs on port 8080
+      - name: spark-pi
+        image: tushardighe/spark-pi:latest
+        #command: ["/bin/sh", "-c"]
+        #args: ["echo", "This is Spark Application for production environment"]
+        ports:
+        - containerPort: 4040  # Assuming this is the port your Spark application exposes
