@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: spark-pi-service
+  name: spark-pi
 spec:
   selector:
     app: spark-pi
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8080
-      nodePort: 32000 # Assuming your Spark application runs on port 8080
-  type: NodePOrt # Change to NodePort or ClusterIP depending on your requirements
+      port: 80  # Expose on port 80
+      targetPort: 4040  # Assuming this is the port your Spark application exposes
+  type: ClusterIP  # Use ClusterIP if you only want internal access, change to NodePort or LoadBalancer for external access
