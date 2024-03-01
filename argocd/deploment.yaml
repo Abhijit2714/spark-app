@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: spark-app
-        image: tushardighe/spark-pi:latest
+        image: abhijitdhamne/spark-pi:latest
         #command: ["/bin/sh", "-c"]
         #args: ["echo", "This is Spark Application for production environment"]
         ports:
