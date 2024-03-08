@@ -44,7 +44,7 @@ jobs:
     - name: Update deployment YAML with latest commit ID
       run: |
         cd argocd
-        sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" deployment.yaml
+        sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" argocd/deployment.yaml
 
       
     - name: Apply deployment with ArgoCD
