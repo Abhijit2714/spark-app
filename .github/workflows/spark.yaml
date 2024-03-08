@@ -36,7 +36,7 @@ jobs:
         file: ./Dockerfile
         platforms: linux/amd64
         push: true
-        tags: abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}
+        tags: abhijitdhamne/spark-pi:latest
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
