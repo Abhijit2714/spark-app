@@ -14,8 +14,6 @@ spec:
     spec:
       containers:
       - name: spark-app
-        image: abhijitdhamne/spark-pi:latest
-        #command: ["/bin/sh", "-c"]
-        #args: ["echo", "This is Spark Application for production environment"]
+        image: abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}  # Use specific tag (e.g., commit ID)
         ports:
         - containerPort: 4040  # Assuming this is the port your Spark application exposes
