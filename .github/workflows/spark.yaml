@@ -53,5 +53,8 @@ jobs:
         pwd
         ls -l
       
-    - name: Apply deployment with ArgoCD
-      run: kubectl apply -f argocd/deploment.yaml
+    - name: Debug deployment YAML file
+      run: cat argocd/deploment.yaml
+      
+    - name: Apply deployment with kubectl (debugging)
+      run: kubectl apply -f argocd/deploment.yaml --validate=false
