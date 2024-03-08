@@ -60,8 +60,6 @@ jobs:
         echo "Updated deployment.yaml with the latest commit ID: ${COMMIT_ID}"
         
         # Commit and push changes back to the repository
-        git config --global user.email "abijitdhamne@gmail.com"
-        git config --global user.name "GitHub Actions"
         git add ${DEPLOYMENT_FILE}
         git commit -m "Update deployment.yaml with latest commit ID"
         git push
