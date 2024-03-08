@@ -43,13 +43,8 @@ jobs:
     
     - name: Update deployment YAML with latest commit ID
       run: |
-        # Get the latest commit ID
-        COMMIT_ID=$(git rev-parse --short HEAD)
-        
-        # Set the deployment YAML file path
-        DEPLOYMENT_FILE="argocd/deployment.yaml"
+          COMMIT_ID=$(git rev-parse --short HEAD)
+          DEPLOYMENT_FILE="argocd/deploment.yaml"
+          sed -i "s|abhijitdhamne/spark-pi:latest|abhijitdhamne/spark-pi:${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
+          echo "Updated deployment.yaml with the latest commit ID: ${COMMIT_ID}"
 
-        # Replace the image tag placeholder with the latest commit ID
-        sed -i "s|IMAGE_TAG_PLACEHOLDER|${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
-        
-        echo "Updated deployment.yaml with the latest commit ID: ${COMMIT_ID}"
