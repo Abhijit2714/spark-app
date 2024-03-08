@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Deploy Spark App
 
 on:
   push:
@@ -36,7 +36,13 @@ jobs:
         file: ./Dockerfile
         platforms: linux/amd64
         push: true
-        tags: abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}
+        tags: abhijitdhamne/spark-pi:latest, abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      
+    - name: Update deployment YAML with latest commit ID
+      run: sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" deployment.yaml
+      
+    - name: Apply deployment with ArgoCD
+      run: kubectl apply -f deployment.yaml
