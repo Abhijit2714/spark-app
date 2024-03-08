@@ -42,7 +42,9 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       
     - name: Update deployment YAML with latest commit ID
-      run: sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" deployment.yaml
+      run: |
+        cd argocd
+        run: sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" deployment.yaml
       
     - name: Apply deployment with ArgoCD
       run: kubectl apply -f deployment.yaml
