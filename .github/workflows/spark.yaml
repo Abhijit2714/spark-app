@@ -46,7 +46,7 @@ jobs:
       
     - name: Update deployment YAML with latest commit ID
       run: |
-        sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" argocd/deployment.yaml
+        sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" argocd/deploment.yaml
 
     - name: Debug GitHub Actions context
       run: |
@@ -54,4 +54,4 @@ jobs:
         ls -l
       
     - name: Apply deployment with ArgoCD
-      run: kubectl apply -f argocd/deployment.yaml
+      run: kubectl apply -f argocd/deploment.yaml
