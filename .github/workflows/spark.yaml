@@ -1,4 +1,4 @@
-name: Build and Deploy Spark App
+name: Build and Push Docker Image
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_deploy:
+  build:
     runs-on: ubuntu-latest
     
     steps:
@@ -36,13 +36,7 @@ jobs:
         file: ./Dockerfile
         platforms: linux/amd64
         push: true
-        tags: |
-          abhijitdhamne/spark-pi:latest
-          abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}
+        tags: abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      
-    - name: Trigger deployment with ArgoCD
-      run: |
-        curl -X POST -k -H "Content-Type: application/json" -d '{"name": "spark-app", "prune": true}' https://172.21.0.2:30001/api/v1/applications/spark-app/sync
