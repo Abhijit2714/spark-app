@@ -41,20 +41,11 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       
-    - name: Debug argocd directory
-      run: ls -l argocd
-      
-    - name: Update deployment YAML with latest commit ID
+    - name: Install ArgoCD CLI
       run: |
-        sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" argocd/deploment.yaml
-
-    - name: Debug GitHub Actions context
+        sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+        sudo chmod +x /usr/local/bin/argocd
+      
+    - name: Deploy application with ArgoCD CLI
       run: |
-        pwd
-        ls -l
-      
-    - name: Debug deployment YAML file
-      run: cat argocd/deploment.yaml
-      
-    - name: Apply deployment with kubectl (debugging)
-      run: kubectl apply -f argocd/deploment.yaml --validate=false
+        argocd app sync spark-app --wait
