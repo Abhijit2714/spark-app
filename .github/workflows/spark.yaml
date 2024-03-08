@@ -41,11 +41,17 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       
+    - name: Debug argocd directory
+      run: ls -l argocd
+      
     - name: Update deployment YAML with latest commit ID
       run: |
-        cd argocd
         sed -i "s|abhijitdhamne/spark-pi:{{TAG_PLACEHOLDER}}|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" argocd/deployment.yaml
 
+    - name: Debug GitHub Actions context
+      run: |
+        pwd
+        ls -l
       
     - name: Apply deployment with ArgoCD
       run: kubectl apply -f argocd/deployment.yaml
