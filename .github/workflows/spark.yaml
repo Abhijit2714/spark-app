@@ -40,7 +40,12 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    
+        
+    - name: Set Git configuration
+      run: |
+        git config --global user.email "abijitdhamne@gmail.com"
+        git config --global user.name "Abhijit2714"
+
     - name: Update deployment YAML with latest commit ID
       run: |
         # Get the latest commit ID
