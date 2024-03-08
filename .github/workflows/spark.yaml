@@ -24,6 +24,10 @@ jobs:
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       
+    - name: Get commit ID
+      id: commit_id
+      run: echo "::set-output name=commit_id::$(git rev-parse --short HEAD)"
+      
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       
@@ -32,7 +36,7 @@ jobs:
         file: ./Dockerfile
         platforms: linux/amd64
         push: true
-        tags: abhijitdhamne/spark-pi:latest
+        tags: abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
