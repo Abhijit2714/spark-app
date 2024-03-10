@@ -31,14 +31,17 @@ jobs:
       id: commit_id
       run: echo "::set-output name=commit_id::$(git rev-parse --short HEAD)"
       
+    - name: Debug - List files in repository
+      run: ls -l
+      
+    - name: Debug - Show content of deployment.yaml
+      run: cat argocd/deployment.yaml
+      
     - name: Update Deployment Manifest
       run: |
-        sed -i "s|abhijitdhamne/spark-pi:latest|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" argocd/deploment.yaml
+        sed -i "s|abhijitdhamne/spark-pi:latest|abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" argocd/deployment.yaml
         
-    - name: Commit changes
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add argocd/deploment.yaml
-        git commit -m "Update image tag in deployment.yaml"
-        git push origin main
+    - name: Debug - Show content of deployment.yaml after update
+      run: cat argocd/deployment.yaml
+
+    # Remaining steps omitted for brevity
