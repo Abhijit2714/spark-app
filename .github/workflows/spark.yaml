@@ -41,25 +41,8 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         
-    - name: Set Git configuration
-      run: |
-        git config --global user.email "abijitdhamne@gmail.com"
-        git config --global user.name "Abhijit2714"
-
-    - name: Update deployment YAML with latest commit ID
-      run: |
-        # Get the latest commit ID
-        COMMIT_ID=$(git rev-parse --short HEAD)
-        
-        # Set the deployment YAML file path
-        DEPLOYMENT_FILE="argocd/deploment.yaml"
-
-        # Replace the image tag placeholder with the latest commit ID
-        sed -i "s|abhijitdhamne/spark-pi:latest|abhijitdhamne/spark-pi:${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
-        
-        echo "Updated deployment.yaml with the latest commit ID: ${COMMIT_ID}"
-        
-        # Commit and push changes back to the repository
-        git add ${DEPLOYMENT_FILE}
-        git commit -m "Update deployment.yaml with latest commit ID"
-        git push
+    - name: Update ArgoCD Application
+      uses: argoproj-labs/argocd-autosync@v2
+      with:
+        application: spark-app
+        revision: HEAD
