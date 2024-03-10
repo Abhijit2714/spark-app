@@ -15,7 +15,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: spark-app
-        image: abhijitdhamne/spark-pi:latest  # Use specific tag (e.g., commit ID)
+        image: abhijitdhamne/spark-pi:${{ github.sha }}
         imagePullPolicy: "Always"
         ports:
-        - containerPort: 4040  # Assuming this is the port your Spark application exposes
+        - containerPort: 4040
