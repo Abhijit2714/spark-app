@@ -47,3 +47,14 @@ jobs:
           DEPLOYMENT_FILE="argocd/deployment.yaml"
           sed -i "s|abhijitdhamne/spark-pi:[^ ]*|abhijitdhamne/spark-pi:${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
           echo "Updated deployment.yaml with the latest commit ID: ${COMMIT_ID}"
+    
+    - name: Debug - Show content of deployment.yaml after update
+      run: cat argocd/deployment.yaml
+      
+    - name: Commit changes to deployment file
+      run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add argocd/deployment.yaml
+          git commit -m "Update image tag in deployment.yaml"
+          git push origin main
