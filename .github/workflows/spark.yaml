@@ -56,8 +56,8 @@ jobs:
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     #- name: Commit and push changes
       run: |
-          git config --global user.name "your username"
-          git config --global user.email "your email"
+          git config --global user.name "Abhijit2714"
+          git config --global user.email "abijitdhamne@gmail.com"
 
           git add -A
           git commit -m "commit message"
