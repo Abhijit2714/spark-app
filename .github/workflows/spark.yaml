@@ -44,8 +44,7 @@ jobs:
       run: |
           COMMIT_ID=$(git rev-parse --short HEAD)
           DEPLOYMENT_FILE="argocd/deployment.yaml"
-          sed -i "s|abhijitdhamne/spark-pi:[^ ]*|abhijitdhamne/spark-pi:${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
-          sed -i "s|github.sha|${COMMIT_ID}|g" ${DEPLOYMENT_FILE}  # Replace placeholder with actual commit ID
+          sed -i "s|image: abhijitdhamne/spark-pi:[^ ]*|image: abhijitdhamne/spark-pi:${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
           echo "Updated deployment.yaml with the latest commit ID: ${COMMIT_ID}"
     
     - name: Debug - Show content of deployment.yaml after update
