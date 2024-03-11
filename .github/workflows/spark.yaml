@@ -54,7 +54,7 @@ jobs:
     - name: Commit changes to deployment file
       env:
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-    #- name: Commit and push changes
+    #- name: Commit and push changes permission given
       run: |
           git config --global user.name "Abhijit2714"
           git config --global user.email "abijitdhamne@gmail.com"
