@@ -2,7 +2,7 @@ name: Build, Push Docker Image, and Update Deployment
 on:
   push:
     branches:
-      - main
+      - feature
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
