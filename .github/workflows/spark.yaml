@@ -9,6 +9,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        ref: main # Checkout the 'main' branch
     - name: Copy custom folder
       run: |
           sudo mkdir -p /home/user/spark-app
@@ -47,4 +49,4 @@ jobs:
           git config --global user.email "abijitdhamne@gmail.com"
           git add argocd/deployment.yaml
           git commit -m "Update image tag and commit ID in deployment.yaml"
-          git push origin master
+          git push origin main # Push changes to the 'main' branch
