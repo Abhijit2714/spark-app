@@ -50,13 +50,13 @@ jobs:
       run: |
         COMMIT_ID=$(git rev-parse --short HEAD)
         DEPLOYMENT_FILE="argocd/deployment.yaml"
-        sed -i "s|image: abhijitdhamne/spark-pi:[^ ]*|image: abhijitdhamne/spark-pi:${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
+        sed -i "s|image: abhijitdhamne/spark-pi:[^ ]*|image: abhijitdhamne/spark-pi:${{ steps.commit_id.outputs.commit_id }}|g" ${DEPLOYMENT_FILE}
         echo "Updated deployment.yaml with the latest image tag: ${COMMIT_ID}"
 
     - name: Commit changes to deployment file
       run: |
-        git config --global user.name "Your Name"
-        git config --global user.email "your.email@example.com"
+        git config --global user.name "abhijitdhamne"
+        git config --global user.email "abijitdhamne@gmail.com"
         git add argocd/deployment.yaml
         git commit -m "Update image tag in deployment.yaml"
         git push origin main
