@@ -47,4 +47,4 @@ jobs:
           DEPLOYMENT_FILE="argocd/deployment.yaml"
           sed -i "s|image: abhijitdhamne/spark-pi:[^ ]*|image: abhijitdhamne/spark-pi:${COMMIT_ID}|g" ${DEPLOYMENT_FILE}
           echo "Updated deployment.yaml with the latest commit ID: ${COMMIT_ID}"
-          kubectl apply -f argocd/deployment.yaml --kubeconfig ${{ secrets.KUBE_CONFIG }}
+          kubectl apply -f ${DEPLOYMENT_FILE} --kubeconfig ${{ secrets.KUBE_CONFIG }}
